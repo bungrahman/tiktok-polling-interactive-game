@@ -44,6 +44,9 @@ A real-time interactive polling game for TikTok Live streamers. Viewers can vote
    - Add new candidates.
    - Upload candidate photos.
    - Set the **Gift Filter**: Define which gift name (e.g., "Rose", "Finger Heart") counts as a vote for that candidate.
+  <img width="982" height="688" alt="image" src="https://github.com/user-attachments/assets/55121d47-d8fa-4eda-9cc3-7e9fe28c34bd" />
+
+   - 
 3. **Live Control & Testing**:
    - **Connect/Disconnect**: Start or stop listening to your TikTok Live.
    - **Simulate Gift**: Test the voting logic without needing actual gifts.
