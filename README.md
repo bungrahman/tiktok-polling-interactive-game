@@ -1,6 +1,6 @@
 [# TikTok Polling Interactive Game
 
-A real-time interactive polling game for TikTok Live streamers. Viewers can vote for their favorite candidates by sending specific gifts. The app features a beautiful overlay for OBS/TikTok Live and a comprehensive admin panel for management.
+A real-time interactive polling game for TikTok Live streamers. Viewers can vote for their favorite candidates by sending specific gifts, also include Comment Speech (Comment to Audio). The app features a beautiful overlay for OBS/TikTok Live and a comprehensive admin panel for management.
 
 ## Features
 
@@ -86,4 +86,3 @@ A real-time interactive polling game for TikTok Live streamers. Viewers can vote
 
 ---
 Developed with ❤️ for TikTok Streamers.
-](https://github.com/bungrahman/tiktok-polling-interactive-game/blob/main/Gambar%20UI%20Candidate%20Polling.png)
