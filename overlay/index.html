@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikTok Live Game Overlay</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/overlay/style.css">
+</head>
+
+<body>
+    <div id="overlay-container">
+        <div id="overlay-content-wrapper">
+            <header id="header">
+                <h1 id="app-title">LIVE POLL 🔥</h1>
+                <div class="live-indicator">
+                    <span class="dot"></span> LIVE
+                </div>
+            </header>
+
+            <main id="candidates-container">
+                <!-- Candidates will be injected here -->
+            </main>
+
+            <section id="leaderboard-container">
+                <h2>TOP GIFTERS</h2>
+                <div id="leaderboard-list">
+                    <!-- Leaderboard will be injected here -->
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="/overlay/app.js"></script>
+</body>
+
+</html>

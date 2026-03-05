@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - TikTok Live Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/overlay/admin/style.css">
+</head>
+
+<body>
+    <div id="admin-container">
+        <aside>
+            <div class="logo">
+                <h2>POLL ADMIN</h2>
+            </div>
+            <nav>
+                <button class="nav-btn active" data-tab="general">Settings</button>
+                <button class="nav-btn" data-tab="candidates">Candidates</button>
+                <button class="nav-btn" data-tab="control">Live Control</button>
+            </nav>
+        </aside>
+
+        <main>
+            <!-- General Settings Tab -->
+            <section id="tab-general" class="tab-content active">
+                <h1>General Settings</h1>
+                <div class="card">
+                    <div class="form-group">
+                        <label>App Title</label>
+                        <input type="text" id="config-title" placeholder="LIVE POLL 🔥">
+                    </div>
+                    <div class="form-group">
+                        <label>TikTok Username (to connect)</label>
+                        <input type="text" id="config-username" placeholder="@yourusername">
+                    </div>
+                    <div class="form-group">
+                        <label>Top Gifter Rank Count</label>
+                        <input type="number" id="config-gifter-count" value="5">
+                    </div>
+                    <button class="primary-btn" onclick="saveGeneralConfig()">Save Settings</button>
+                </div>
+
+                <div class="card mt-20">
+                    <h2>Connection Status</h2>
+                    <div id="connection-status" class="status-badge disconnected">Disconnected</div>
+                    <div class="flex gap-10 mt-10">
+                        <button class="success-btn" onclick="connectTikTok()">Connect to Live</button>
+                        <button class="danger-btn" onclick="disconnectTikTok()">Disconnect</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Candidates Tab -->
+            <section id="tab-candidates" class="tab-content">
+                <div class="flex-between">
+                    <h1>Manage Candidates</h1>
+                    <button class="primary-btn" onclick="addCandidate()">+ Add Candidate</button>
+                </div>
+                <div id="candidates-list" class="mt-20">
+                    <!-- Dynamic list of candidates -->
+                </div>
+                <button class="primary-btn mt-20" onclick="saveCandidates()">Save All Candidates</button>
+            </section>
+
+            <!-- Control Tab -->
+            <section id="tab-control" class="tab-content">
+                <h1>Live Control & Testing</h1>
+                <div class="card">
+                    <h2>Simulate Gift (Test)</h2>
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" id="test-username" value="Budi_Gamer">
+                    </div>
+                    <div class="form-group">
+                        <label>Gift Name</label>
+                        <select id="test-gift-name">
+                            <!-- Options will be populated from candidates -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Count</label>
+                        <input type="number" id="test-gift-count" value="1">
+                    </div>
+                    <button class="primary-btn" onclick="sendTestGift()">Send Test Gift</button>
+                </div>
+
+                <div class="card mt-20">
+                    <h2>Simulate Comment (TTS)</h2>
+                    <div class="form-group">
+                        <label>Comment Text</label>
+                        <input type="text" id="test-comment-text" placeholder="Halo, apa kabar?">
+                    </div>
+                    <button class="primary-btn" onclick="sendTestComment()">Send Test Comment</button>
+                </div>
+
+                <div class="card mt-20">
+                    <h2>Danger Zone</h2>
+                    <p>This will reset all current poll results and leaderboard to zero.</p>
+                    <button class="danger-btn" onclick="resetGame()">Reset Game Data</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals or other overlays -->
+    <script src="/overlay/admin/app.js"></script>
+</body>
+
+</html>

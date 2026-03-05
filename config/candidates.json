@@ -1,0 +1,34 @@
+{
+  "app_title": "Siapa jagoan lo di antara Trio Politik ini? \ud83c\uddee\ud83c\udde9",
+  "background_color": "#00000000",
+  "top_gifter_count": 6,
+  "tiktok_username": "@bung_rahman",
+  "candidates": [
+    {
+      "id": "A",
+      "name": "Prabowo Subianto",
+      "description": "Rose (Mawar)",
+      "photo": "/uploads/Prabowo.webp",
+      "gift_name": "Rose",
+      "gift_id": 5655,
+      "color": "#ff6b9d"
+    },
+    {
+      "id": "B",
+      "name": "Anies Baswedan",
+      "description": "Coffee (Kopi)",
+      "photo": "/uploads/anis.jpeg",
+      "gift_name": "Coffee",
+      "gift_id": 5756,
+      "color": "#ffa500"
+    },
+    {
+      "id": "C1772685690054",
+      "name": "Gibran Rakabuming Raka",
+      "description": "TikTok",
+      "photo": "/uploads/Gibran.webp",
+      "gift_name": "TikTok",
+      "color": "#e57f48"
+    }
+  ]
+}
