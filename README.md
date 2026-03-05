@@ -1,8 +1,8 @@
-# TikTok Polling Interactive Game
+[# TikTok Polling Interactive Game
 
 A real-time interactive polling game for TikTok Live streamers. Viewers can vote for their favorite candidates by sending specific gifts. The app features a beautiful overlay for OBS/TikTok Live and a comprehensive admin panel for management.
 
-## 🚀 Features
+## Features
 
 - **Real-time Polling**: Votes update instantly via WebSockets.
 - **TikTok Integration**: Automatically detects gifts and comments from your live stream.
@@ -11,14 +11,14 @@ A real-time interactive polling game for TikTok Live streamers. Viewers can vote
 - **Admin Control Panel**: Easy-to-use interface to manage the game, connect to TikTok, and test features.
 - **Responsive & Modern UI**: Built with a "premium" aesthetic using modern typography and smooth animations.
 
-## 🛠 Technology Stack
+## Technology Stack
 
 - **Backend**: Python, FastAPI, Uvicorn (ASGI Server).
 - **TikTok Integration**: [TikTokLive](https://github.com/isaackogan/TikTokLive) (Python library).
 - **Frontend**: Vanilla HTML5, CSS3, JavaScript (ES6+).
 - **Real-time**: WebSockets for low-latency updates between backend and frontend.
 
-## 📦 Libraries Used
+## Libraries Used
 
 - `TikTokLive`: For connecting to TikTok Live and listening to events.
 - `fastapi`: Modern, fast web framework for building APIs.
@@ -27,7 +27,7 @@ A real-time interactive polling game for TikTok Live streamers. Viewers can vote
 - `aiofiles`: For asynchronous file operations.
 - `websockets`: For real-time communication.
 
-## 🕹️ Admin Settings & URLs
+## Admin Settings & URLs
 
 | URL | Description |
 | --- | --- |
@@ -50,7 +50,7 @@ A real-time interactive polling game for TikTok Live streamers. Viewers can vote
    - **Simulate Comment**: Test the comment display/TTS features.
    - **Reset Game Data**: Clear all votes and the leaderboard.
 
-## 🛠️ Installation & Setup
+## Installation & Setup
 
 1. **Clone the repository**:
    ```bash
@@ -73,9 +73,11 @@ A real-time interactive polling game for TikTok Live streamers. Viewers can vote
    - Configure your candidates and TikTok username.
    - Click "Connect to Live" to start receiving real-time votes!
 
-## 📸 Screenshots
-
-*(Add your screenshots here, e.g., using `Gambar UI.png` artifacts from the root folder)*
+## Screenshots
+![UI Overlay](Gambar%20UI.png)
+![Candidat Polling](Gambar%20UI%20Candidate%20Polling.png)
+![Candidat Setting App](Gambar%20UI%20Settings%20App.png)
+![Candidat Setting App](Gambar%20UI%20Live%20Control%20%26%20Testing.png)
 
 - **Overlay**: `Gambar UI.png`
 - **Candidate Management**: `Gambar UI Candidate Polling.png`
@@ -84,3 +86,4 @@ A real-time interactive polling game for TikTok Live streamers. Viewers can vote
 
 ---
 Developed with ❤️ for TikTok Streamers.
+](https://github.com/bungrahman/tiktok-polling-interactive-game/blob/main/Gambar%20UI%20Candidate%20Polling.png)
