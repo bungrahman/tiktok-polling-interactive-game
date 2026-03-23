@@ -36,9 +36,21 @@ function renderCandidates() {
         const item = document.createElement('div');
         item.className = 'candidate-item';
         item.innerHTML = `
-            <div class="candidate-photo-preview" onclick="triggerUpload(${index})">
-                <img id="img-${index}" src="${c.photo || 'https://placehold.co/100x100?text=Photo'}" alt="Photo">
-                <input type="file" id="file-${index}" style="display:none" onchange="uploadImage(${index})">
+            <div class="candidate-previews">
+                <div class="preview-group">
+                    <label>Foto Kandidat</label>
+                    <div class="candidate-photo-preview" onclick="triggerUpload(${index}, 'photo')" title="Candidate Photo">
+                        <img id="img-photo-${index}" src="${c.photo || 'https://placehold.co/100x100?text=Photo'}" alt="Photo">
+                        <input type="file" id="file-photo-${index}" style="display:none" onchange="uploadImage(${index}, 'photo')">
+                    </div>
+                </div>
+                <div class="preview-group">
+                    <label>Ikon Gift</label>
+                    <div class="gift-icon-preview" onclick="triggerUpload(${index}, 'gift')" title="Gift Icon">
+                        <img id="img-gift-${index}" src="${c.gift_icon || 'https://placehold.co/100x100?text=Gift'}" alt="Gift">
+                        <input type="file" id="file-gift-${index}" style="display:none" onchange="uploadImage(${index}, 'gift')">
+                    </div>
+                </div>
             </div>
             <div class="flex-1">
                 <div class="grid-2">
@@ -74,6 +86,7 @@ function addCandidate() {
         name: 'New Candidate',
         description: 'Send gift to vote',
         photo: '',
+        gift_icon: '',
         gift_name: '',
         color: '#4f46e5'
     });
@@ -89,12 +102,12 @@ function removeCandidate(index) {
     renderCandidates();
 }
 
-function triggerUpload(index) {
-    document.getElementById(`file-${index}`).click();
+function triggerUpload(index, type) {
+    document.getElementById(`file-${type}-${index}`).click();
 }
 
-async function uploadImage(index) {
-    const file = document.getElementById(`file-${index}`).files[0];
+async function uploadImage(index, type) {
+    const file = document.getElementById(`file-${type}-${index}`).files[0];
     if (!file) return;
 
     const formData = new FormData();
@@ -105,8 +118,12 @@ async function uploadImage(index) {
         body: formData
     });
     const data = await res.json();
-    config.candidates[index].photo = data.url;
-    document.getElementById(`img-${index}`).src = data.url;
+    
+    // Map type to the correct config field
+    const field = type === 'photo' ? 'photo' : 'gift_icon';
+    config.candidates[index][field] = data.url;
+    
+    document.getElementById(`img-${type}-${index}`).src = data.url;
 }
 
 async function saveGeneralConfig() {

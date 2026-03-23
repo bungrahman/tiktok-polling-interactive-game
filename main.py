@@ -116,7 +116,8 @@ async def test_gift(request: Request):
     await manager.broadcast(engine.get_state())
     return {"status": "success"}
 
-# --- TIKTOK LIVE CLIENT ---
+import time
+recent_comments_cache = {}
 
 async def tiktok_listener(username):
     global client
@@ -138,6 +139,20 @@ async def tiktok_listener(username):
 
     @client.on(CommentEvent)
     async def on_comment(event: CommentEvent):
+        global recent_comments_cache
+        comment_hash = f"{event.user.unique_id}:{event.comment}"
+        
+        current_time = time.time()
+        # Biarkan kalau komen yang sama baru masuk setelah 2 detik berlalu
+        if comment_hash in recent_comments_cache and (current_time - recent_comments_cache[comment_hash] < 2.0):
+            return
+            
+        recent_comments_cache[comment_hash] = current_time
+        
+        # Bersihkan cache agar tidak memakan RAM jika perlu
+        if len(recent_comments_cache) > 200:
+            recent_comments_cache.clear()
+            
         print(f"DEBUG: Received comment from {event.user.unique_id}: {event.comment}")
         await manager.broadcast({
             "type": "comment",
@@ -154,16 +169,24 @@ async def tiktok_listener(username):
                 avatar_url = event.user.avatar.urls[0]
         except:
             pass
+        
+        # Extract gift icon URL safely
+        gift_icon_url = ""
+        try:
+            if event.gift.info.icon and event.gift.info.icon.urls:
+                gift_icon_url = event.gift.info.icon.urls[0]
+        except:
+            pass
 
-        print(f"DEBUG: Received gift: {event.gift.info.name} x{event.gift.count} from {event.user.unique_id} (Avatar: {avatar_url})")
+        print(f"DEBUG: Received gift: {event.gift.info.name} x{event.gift.count} from {event.user.unique_id} (Gift Icon: {gift_icon_url})")
         
         if event.gift.repeat_end:
             # For repeatable gifts, process when done
-            engine.process_gift(event.user.unique_id, event.gift.info.name, event.gift.count, avatar_url=avatar_url)
+            engine.process_gift(event.user.unique_id, event.gift.info.name, event.gift.count, avatar_url=avatar_url, gift_icon_url=gift_icon_url)
             await manager.broadcast(engine.get_state())
         elif not event.gift.repeatable:
             # Non-repeatable gifts
-            engine.process_gift(event.user.unique_id, event.gift.info.name, event.gift.count, avatar_url=avatar_url)
+            engine.process_gift(event.user.unique_id, event.gift.info.name, event.gift.count, avatar_url=avatar_url, gift_icon_url=gift_icon_url)
             await manager.broadcast(engine.get_state())
 
     try:
@@ -201,8 +224,9 @@ async def test_gift(request: Request):
     gift_name = data.get("gift_name", "Rose")
     count = int(data.get("count", 1))
     avatar_url = data.get("avatar_url", "https://placehold.co/100x100?text=Top")
+    gift_icon = data.get("gift_icon", "")
     
-    engine.process_gift(username, gift_name, count, avatar_url=avatar_url)
+    engine.process_gift(username, gift_name, count, avatar_url=avatar_url, gift_icon_url=gift_icon)
     await manager.broadcast(engine.get_state())
     return {"status": "success"}
 

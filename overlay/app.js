@@ -15,8 +15,10 @@ function connectWS() {
 
     socket.onmessage = (event) => {
         const data = JSON.parse(event.data);
+        console.log('DEBUG WS: Received data', data);
 
         if (data.type === 'comment') {
+            console.log('DEBUG TTS: Processing comment', data.comment);
             speakComment(data.username, data.comment);
             return;
         }
@@ -46,10 +48,13 @@ function updateUI(state) {
 
         card.innerHTML = `
             <div class="candidate-info">
-                <img src="${candidate.photo}" alt="${candidate.name}" class="candidate-photo" style="border-color: ${candidate.color}">
+                <img src="${candidate.photo || 'https://placehold.co/100x100?text=👤'}" alt="${candidate.name}" class="candidate-photo" style="border-color: ${candidate.color}">
                 <div class="candidate-details">
                     <div class="candidate-name">${candidate.name}</div>
-                    <div class="candidate-gift">Send 1x ${candidate.gift_name} to Vote</div>
+                    <div class="candidate-gift">
+                        ${candidate.gift_icon ? `<img src="${candidate.gift_icon}" class="gift-icon">` : ''}
+                        Send 1x ${candidate.gift_name} to Vote
+                    </div>
                 </div>
                 <div class="vote-count" style="color: ${candidate.color}">${candidate.votes}</div>
             </div>
@@ -82,20 +87,83 @@ function renderLeaderboard(gifters) {
     });
 }
 
-function speakComment(username, text) {
-    if (!window.speechSynthesis) return;
+/* --- Reliable Text to Speech (Native Web Speech API) --- */
+const audioQueue = [];
+let isPlaying = false;
+let audioEnabled = false;
 
-    // Optional: add "kata [username]" or similar
-    const utterance = new SpeechSynthesisUtterance(`${text}`);
+// Global array to prevent Chrome garbage collector from destroying utterances
+window.speechUtterances = [];
 
-    // Try to find an Indonesian voice
-    const idVoice = window.speechSynthesis.getVoices().find(v => v.lang.includes('id-ID'));
+document.getElementById('unmute-btn').addEventListener('click', function() {
+    audioEnabled = true;
+    this.style.display = 'none';
+    
+    if (window.speechSynthesis) {
+        // Unlock TTS audio context
+        window.speechSynthesis.resume();
+        const dummy = new SpeechSynthesisUtterance("");
+        dummy.volume = 0;
+        window.speechSynthesis.speak(dummy);
+    }
+});
+
+function playNextAudio() {
+    if (audioQueue.length === 0) {
+        isPlaying = false;
+        return;
+    }
+    
+    if (!window.speechSynthesis) {
+        audioQueue.shift(); // skip
+        playNextAudio();
+        return;
+    }
+    
+    isPlaying = true;
+    const item = audioQueue.shift();
+    
+    if (!audioEnabled) {
+        console.warn("TTS Skipped: Audio not enabled by user yet.");
+        playNextAudio();
+        return;
+    }
+    
+    const text = `${item.username} bilang, ${item.text}`;
+    const utterance = new SpeechSynthesisUtterance(text);
+    
+    // Choose ID voice if available
+    const voices = window.speechSynthesis.getVoices();
+    const idVoice = voices.find(v => v.lang.includes('id-ID') || v.lang.includes('id_ID'));
     if (idVoice) utterance.voice = idVoice;
-
+    
     utterance.rate = 1.0;
     utterance.pitch = 1.0;
-
+    utterance.volume = 1.0;
+    
+    utterance.onend = () => {
+        // Remove from memory
+        window.speechUtterances = window.speechUtterances.filter(u => u !== utterance);
+        playNextAudio();
+    };
+    
+    utterance.onerror = (e) => {
+        console.error("SpeechSynthesis error:", e);
+        window.speechUtterances = window.speechUtterances.filter(u => u !== utterance);
+        playNextAudio();
+    };
+    
+    // Save to global to prevent GC bug
+    window.speechUtterances.push(utterance);
     window.speechSynthesis.speak(utterance);
+}
+
+function speakComment(username, text) {
+    console.log(`TTS Queued: "${text}" from ${username}`);
+    audioQueue.push({ username, text });
+    if (!isPlaying) {
+        playNextAudio();
+    }
 }
 
 // Initial connection

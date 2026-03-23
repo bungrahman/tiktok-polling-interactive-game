@@ -11,7 +11,8 @@
       "photo": "/uploads/Prabowo.webp",
       "gift_name": "Rose",
       "gift_id": 5655,
-      "color": "#ff6b9d"
+      "color": "#ff6b9d",
+      "gift_icon": "/uploads/Rose.png"
     },
     {
       "id": "B",
@@ -20,7 +21,8 @@
       "photo": "/uploads/anis.jpeg",
       "gift_name": "Coffee",
       "gift_id": 5756,
-      "color": "#ffa500"
+      "color": "#ffa500",
+      "gift_icon": "/uploads/Coffee.png"
     },
     {
       "id": "C1772685690054",
@@ -28,7 +30,8 @@
       "description": "TikTok",
       "photo": "/uploads/Gibran.webp",
       "gift_name": "TikTok",
-      "color": "#e57f48"
+      "color": "#e57f48",
+      "gift_icon": "/uploads/TikTok.png"
     }
   ]
 }

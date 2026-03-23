@@ -76,13 +76,10 @@ A real-time interactive polling game for TikTok Live streamers. Viewers can vote
    - Configure your candidates and TikTok username.
    - Click "Connect to Live" to start receiving real-time votes!
 
-## Screenshots
 ![UI Overlay](Gambar%20UI.png)
 ![Candidat Polling](Gambar%20UI%20Candidate%20Polling.png)
 ![Candidat Setting App](Gambar%20UI%20Settings%20App.png)
 ![Candidat Setting App](Gambar%20UI%20Live%20Control%20%26%20Testing.png)
-
-- **Overlay**: `Gambar UI.png`
 - **Candidate Management**: `Gambar UI Candidate Polling.png`
 - **Admin Settings**: `Gambar UI Settings App.png`
 - **Live Control**: `Gambar UI Live Control & Testing.png`

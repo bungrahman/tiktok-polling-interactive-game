@@ -54,15 +54,20 @@ class GameEngine:
         self.gifters = {}
         self.save_scores()
 
-    def process_gift(self, username, gift_name, count, avatar_url=None):
+    def process_gift(self, username, gift_name, count, avatar_url=None, gift_icon_url=None):
         gift_name_clean = gift_name.strip().lower()
         print(f"DEBUG ENGINE: Processing gift '{gift_name_clean}' from {username} x{count}")
         
         # find candidate that matches the gift name
         candidate_id = None
-        for c in self.config.get('candidates', []):
+        for i, c in enumerate(self.config.get('candidates', [])):
             if c['gift_name'].strip().lower() == gift_name_clean:
                 candidate_id = c['id']
+                # Auto-update gift icon if missing in config
+                if gift_icon_url and not c.get('gift_icon'):
+                    self.config['candidates'][i]['gift_icon'] = gift_icon_url
+                    print(f"DEBUG ENGINE: Auto-updated gift icon for {c['name']}")
+                    self.save_config(self.config)
                 break
         
         if candidate_id:

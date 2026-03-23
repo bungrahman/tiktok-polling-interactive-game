@@ -147,6 +147,15 @@ header {
     font-size: clamp(0.7rem, 1.8vw, 0.85rem);
     /* Reduced */
     color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.gift-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
 }
 
 .vote-count {
